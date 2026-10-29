@@ -94,7 +94,8 @@ if (!fs.existsSync(CONTENT_FILE)) {
 let supabase = null;
 function getSupabaseClient() {
   const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_ANON_KEY;
+  // The service role key works with Row Level Security on; the anon key is the fallback
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
   if (url && key && url.trim() !== '' && key.trim() !== '') {
     if (!supabase) {
       supabase = createClient(url, key);
